@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200" height="60" viewBox="0 0 200 60" xmlns="http://www.w3.org/2000/svg">
+  <!-- 行星轨道背景 -->
+  <ellipse cx="30" cy="30" rx="25" ry="10" fill="none" stroke="#e0e0e0" stroke-width="0.5" transform="rotate(-15,30,30)" />
+  <ellipse cx="30" cy="30" rx="20" ry="8" fill="none" stroke="#e0e0e0" stroke-width="0.5" transform="rotate(-15,30,30)" />
+  
+  <!-- 主标题文字 -->
+  <text x="65" y="35" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#2196F3">极客航路</text>
+  
+  <!-- 行星图标 -->
+  <circle cx="30" cy="30" r="15" fill="#2196F3" />
+  <circle cx="30" cy="30" r="12" fill="#1976D2" />
+  
+  <!-- 二进制装饰 -->
+  <text x="25" y="27" font-family="Courier" font-size="4" fill="white">1010</text>
+  <text x="25" y="32" font-family="Courier" font-size="4" fill="white">0101</text>
+  
+  <!-- 轨道上的小行星 -->
+  <circle cx="48" cy="25" r="2" fill="#FF9800" />
+  <circle cx="12" cy="35" r="1.5" fill="#FF9800" />
+  
+  <!-- 副标题 -->
+  <text x="65" y="45" font-family="Arial, sans-serif" font-size="10" fill="#757575">Code Your Future</text>
+</svg>

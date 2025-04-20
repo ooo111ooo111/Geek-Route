@@ -1,0 +1,98 @@
+/* 代码块样式 */
+.markdown-body pre,
+.markdown-body code {
+  font-family: 'Source Code Pro', Consolas, Monaco, 'Andale Mono', monospace;
+  font-size: 16px;
+  line-height: 1.6;
+  border-radius: 4px;
+}
+
+.markdown-body pre {
+  background-color: #F5F5F5;
+  color: #333333;
+  padding: 16px;
+  margin: 16px 0;
+  overflow: auto;
+  border: 1px solid #E0E0E0;
+}
+
+.markdown-body code {
+  background-color: #F5F5F5;
+  color: #333333;
+  padding: 2px 4px;
+  margin: 0 2px;
+}  
+
+/* 语法高亮样式 - 兼容Prism.js和Highlight.js */
+.hljs,
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: #708090;
+}
+
+.token.punctuation {
+  color: #999;
+}
+
+.token.namespace {
+  opacity: 0.7;
+}
+
+.token.property,
+.token.tag,
+.token.boolean,
+.token.number,
+.token.constant,
+.token.symbol,
+.token.deleted {
+  color: #905;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+  color: #4CAF50;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string {
+  color: #9a6e3a;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.keyword {
+  color: #07a;
+}
+
+.token.function,
+.token.class-name {
+  color: #FFA726;
+}
+
+.token.regex,
+.token.important,
+.token.variable {
+  color: #e90;
+}
+
+.token.important,
+.token.bold {
+  font-weight: bold;
+}
+
+.token.italic {
+  font-style: italic;
+}
+
+.token.entity {
+  cursor: help;
+}
