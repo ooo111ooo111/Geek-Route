@@ -17,7 +17,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.github.paicoding.forum</groupId>
-    <artifactId>paicoding-forum</artifactId>
+    <artifactId>Geek-Route</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>paicoding-forum</name>
     <description>simple forum by java &amp; spring</description>

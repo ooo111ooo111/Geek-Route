@@ -3,18 +3,18 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>JK-Route</artifactId>
+        <artifactId>Geek-Route</artifactId>
         <groupId>com.github.paicoding.forum</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>JK-service</artifactId>
+    <artifactId>paicoding-service</artifactId>
 
     <dependencies>
         <dependency>
             <groupId>com.github.paicoding.forum</groupId>
-            <artifactId>JK-core</artifactId>
+            <artifactId>paicoding-core</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
