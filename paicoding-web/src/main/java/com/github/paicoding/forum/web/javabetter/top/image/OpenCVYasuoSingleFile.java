@@ -11,7 +11,7 @@ public class OpenCVYasuoSingleFile {
 
     public static void main(String[] args) {
         OpenCV.loadShared();
-        String filename = docPath+"logo.svg";
+        String filename = docPath+"icon.svg";
         System.out.println(DateUtil.formatDate(FileUtil.lastModifiedTime(filename)));
         if ( FileUtil.lastModifiedTime(filename).after(DateUtil.parse("2022年05月17日"))) {
             System.out.println("要修改");

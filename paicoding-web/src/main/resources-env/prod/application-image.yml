@@ -6,12 +6,12 @@ image:
   # 临时存储目录
   tmp-upload-path: /tmp/forum/
   # 图片访问域名
-  cdn-host: https://imgs.hhui.top/
+  cdn-host: https://www.geek-route.asia/
   oss:
     type: local
-    endpoint:
-    prefix: paicoding/
-    ak:
-    sk:
-    bucket:
-    host:
+    endpoint: oss-cn-beijing.aliyuncs.com
+    prefix: image/
+    ak: LTAI5t7epaeGRvcEPJssQ2ZE
+    sk: rxeqFGSXiU5sTIYmp8vqicB4Kzz4EJ
+    bucket: web-c-q-waimai
+    host: https://web-c-q-waimai.oss-cn-beijing.aliyuncs.com/

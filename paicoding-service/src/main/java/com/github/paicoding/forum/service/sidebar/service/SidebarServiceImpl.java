@@ -91,7 +91,7 @@ public class SidebarServiceImpl implements SidebarService {
             );
         });
         return new SideBarDTO()
-                .setTitle("关于技术派")
+                .setTitle("关于极客航路")
                 // TODO 知识星球的
                 .setImg("https://cdn.tobebetterjavaer.com/paicoding/main/paicoding-zsxq.jpg")
                 .setUrl("https://paicoding.com/article/detail/2422000009961473")
