@@ -217,9 +217,9 @@ public class SidebarServiceImpl implements SidebarService {
      * @return
      */
     private SideBarDTO subscribeSideBar() {
-        return new SideBarDTO().setTitle("订阅").setSubTitle("楼仔")
-                .setImg("//cdn.tobebetterjavaer.com/paicoding/a768cfc54f59d4a056f79d1c959dcae9.jpg")
-                .setContent("10本校招必刷八股文")
+        return new SideBarDTO().setTitle("订阅").setSubTitle("程序员曼布")
+                .setImg("https://web-c-q-waimai.oss-cn-beijing.aliyuncs.com/qrcode_for_gh_57e2daae5c4e_258%20%281%29.jpg")
+                .setContent("有惊喜哦")
                 .setStyle(SidebarStyleEnum.SUBSCRIBE.getStyle());
     }
 

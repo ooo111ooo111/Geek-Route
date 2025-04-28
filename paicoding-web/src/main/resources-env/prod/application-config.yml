@@ -7,17 +7,17 @@ view:
     websiteName: 极客航路
     websiteLogoUrl: https://www.geek-route.asia/img/logo.svg
     websiteFaviconIconUrl: https://www.geek-route.asia/img/icon.png
-    contactMeTitle: 联系我 - 程序呀曼布
-    contactMeWxQrCode:
+    contactMeTitle: 联系我 - 程序员曼布
+    contactMeWxQrCode: https://web-c-q-waimai.oss-cn-beijing.aliyuncs.com/qrcode_for_gh_57e2daae5c4e_258%20%281%29.jpg
     pageSize: 20
     cdnImgStyle:
     websiteRecord: 备案被小人偷袭了
-    wxLoginUrl:
+    wxLoginUrl: https://web-c-q-waimai.oss-cn-beijing.aliyuncs.com/qrcode_for_gh_57e2daae5c4e_258%20%281%29.jpg
     host: https://www.geek-route.asia
     welcomeInfo: 欢迎来到极客航路，戳 <a href="/article/detail/155">极客航路社区上线！</a> 了解我们
     zsxqUrl:
     zsxqPosterUrl:
-    contactMeStarQrCode:
+    contactMeStarQrCode: https://web-c-q-waimai.oss-cn-beijing.aliyuncs.com/qrcode_for_gh_57e2daae5c4e_258%20%281%29.jpg
     oss: https://www.geek-route.asia/
 
 knife4j:

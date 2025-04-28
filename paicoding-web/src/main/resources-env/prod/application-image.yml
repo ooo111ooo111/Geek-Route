@@ -11,7 +11,7 @@ image:
     type: local
     endpoint: oss-cn-beijing.aliyuncs.com
     prefix: image/
-    ak:
+    ak: LTAI5t7epaeGRvcEPJssQ2ZE
     sk:
     bucket: web-c-q-waimai
     host: https://web-c-q-waimai.oss-cn-beijing.aliyuncs.com/

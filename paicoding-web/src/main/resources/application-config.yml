@@ -7,10 +7,10 @@ view:
     websiteName: 极客航路
     websiteLogoUrl: https://geek-route.asia/img/logo.svg
     websiteFaviconIconUrl: https://geek-route.asia/img/icon.png
-    zsxqUrl:
+    zsxqUrl: https://web-c-q-waimai.oss-cn-beijing.aliyuncs.com/IMG_20250424_131130.jpg
     zsxqPosterUrl:
     contactMeTitle: 联系我 - 程序员曼布
-    contactMeWxQrCode:
+    contactMeWxQrCode: https://web-c-q-waimai.oss-cn-beijing.aliyuncs.com/qrcode_for_gh_57e2daae5c4e_258%20%281%29.jpg
     contactMeStarQrCode:
     pageSize: 20
     cdnImgStyle:
