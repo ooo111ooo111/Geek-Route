@@ -491,16 +491,12 @@ button:focus {
 }
 
 .posts-list-desc {
-  display: inline;
-  max-height: 48px;
-  text-overflow: -o-ellipsis-lastline;
-  overflow: hidden;
-  text-overflow: ellipsis;
   display: -webkit-box;
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
   -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
 }
+
 
 .posts-list-title {
   font-size: 18px;

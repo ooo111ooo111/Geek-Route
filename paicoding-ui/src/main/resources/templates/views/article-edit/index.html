@@ -129,11 +129,6 @@
               <input type="radio" name="readType" value="4" th:checked="${vo.article != null && vo.article.readType == 4}"  class="form-selectgroup-input"/>
               <span class="form-selectgroup-label">付费阅读</span>
             </label>
-            <label class="r-form-selectgroup-item"
-                   th:class="'r-form-selectgroup-item ' + ${vo.article != null && vo.article.readType == 3 ? 'form-selectgroup-item--active': ''}">
-              <input type="radio" name="readType" value="3" th:checked="${vo.article != null && vo.article.readType == 3}" class="form-selectgroup-input"/>
-              <span class="form-selectgroup-label">星球专享</span>
-            </label>
           </div>
         </div>
         <!--    支付阅读相关配置        -->
@@ -164,13 +159,6 @@
                 <li  style="list-style-type: circle;">
                   作者通过邮箱接收打赏确认邮件，根据是否到账选择确认收款或未收款
                 </li>
-              </ul>
-            </div>
-            <div id="wxPayTip">
-              <h5 style="margin-left: 4em;font-size: 1.2em;color: #363645">微信支付说明:</h5>
-              <ul style="margin-left: 6em">
-                <li  style="list-style-type: circle;">通过微信扫一扫实现文章付费，系统自动判断支付成功失败；</li>
-                <li  style="list-style-type: circle;">用户支付金额先汇总到技术派账号，后台再统一给作者进行分账</li>
               </ul>
             </div>
           </div>
