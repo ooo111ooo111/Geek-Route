@@ -42,7 +42,8 @@ public class WxAckHelper {
         if ("subscribe".equalsIgnoreCase(eventType)) {
             // 订阅
             textRes = "感谢你关注曼布，曼布持续输出好文，感兴趣地可以关注曼布的CSDN账号+\n" +
-                    "IMG_20250424_131130.jpg";
+                    "\n" +
+                    "https://web-c-q-waimai.oss-cn-beijing.aliyuncs.com/IMG_20250424_131130.jpg";
         }
         // 下面是关键词回复
         else if (chatgptService.inChat(fromUser, content)) {
@@ -52,6 +53,11 @@ public class WxAckHelper {
                 log.error("AI 访问异常! content: {}", content, e);
                 textRes = "AI 出了点小状况，请稍后再试!";
             }
+        }
+        else if("110".equals(content))
+        {
+            textRes = "计算机珍贵资料 \n"
+            + "完了再补，哈哈哈";
         }
 
         else if ("商务合作".equalsIgnoreCase(content)) {
