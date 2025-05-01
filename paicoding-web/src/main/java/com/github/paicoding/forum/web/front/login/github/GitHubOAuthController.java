@@ -3,7 +3,7 @@ package com.github.paicoding.forum.web.front.login.github;
 import com.github.paicoding.forum.service.oauth.service.GitHubOAuthService;
 import com.github.paicoding.forum.service.oauth.model.GitHubUserInfo;
 import com.github.paicoding.forum.service.user.repository.entity.UserDO;
-import com.github.paicoding.forum.service.oauth.service.OAuthUserService;
+import com.github.paicoding.forum.service.oauth.OAuthUserService;
 import com.github.paicoding.forum.service.oauth.service.GitHubTokenService;
 import com.github.paicoding.forum.service.session.SessionService;
 import com.github.paicoding.forum.service.session.model.UserSessionDTO;

@@ -3,7 +3,7 @@ package com.github.paicoding.forum.service.oauth.task;
 import com.github.paicoding.forum.service.oauth.service.GitHubOAuthService;
 import com.github.paicoding.forum.service.oauth.model.GitHubUserInfo;
 import com.github.paicoding.forum.service.oauth.service.GitHubTokenService;
-import com.github.paicoding.forum.service.oauth.service.OAuthUserService;
+import com.github.paicoding.forum.service.oauth.OAuthUserService;
 import com.github.paicoding.forum.service.user.repository.dao.UserDao;
 import com.github.paicoding.forum.service.user.repository.entity.UserDO;
 import lombok.extern.slf4j.Slf4j;

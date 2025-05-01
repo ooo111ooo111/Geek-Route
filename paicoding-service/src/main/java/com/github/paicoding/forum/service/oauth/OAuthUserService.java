@@ -1,4 +1,4 @@
-package com.github.paicoding.forum.service.oauth.service;
+package com.github.paicoding.forum.service.oauth;
 
 import com.github.paicoding.forum.service.oauth.model.GitHubUserInfo;
 import com.github.paicoding.forum.service.user.repository.entity.UserDO;
