@@ -8,12 +8,17 @@ import com.github.paicoding.forum.core.cache.RedisClient;
 import com.github.paicoding.forum.core.mdc.SelfTraceIdGenerator;
 import com.github.paicoding.forum.core.util.JsonUtil;
 import com.github.paicoding.forum.core.util.MapUtils;
+import com.github.paicoding.forum.service.session.SessionService;
+import com.github.paicoding.forum.service.session.model.UserSessionDTO;
+import com.github.paicoding.forum.service.user.repository.entity.UserDO;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Base64Utils;
 
+import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Objects;
@@ -98,4 +103,20 @@ public class UserSessionHelper {
             return null;
         }
     }
+    @Autowired
+    private SessionService sessionService;
+
+    public Object getLoginUser(HttpSession session) {
+        return sessionService.getUser(session);
+    }
+
+    public void setLoginUser(HttpSession session, UserDO user) {
+        UserSessionDTO dto = sessionService.convertToSessionDTO(user);
+        sessionService.setUser(session, dto);
+    }
+
+    public void removeLoginUser(HttpSession session) {
+        sessionService.removeUser(session);
+    }
+
 }

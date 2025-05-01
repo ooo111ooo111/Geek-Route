@@ -42,7 +42,6 @@ public class WxAckHelper {
         if ("subscribe".equalsIgnoreCase(eventType)) {
             // 订阅
             textRes = "感谢你关注曼布，曼布持续输出好文，感兴趣地可以关注曼布的CSDN账号+\n" +
-                    "\n" +
                     "https://web-c-q-waimai.oss-cn-beijing.aliyuncs.com/IMG_20250424_131130.jpg";
         }
         // 下面是关键词回复
@@ -67,7 +66,7 @@ public class WxAckHelper {
         else if (CodeGenerateUtil.isVerifyCode(content)) {
             sessionService.autoRegisterWxUserInfo(fromUser);
             if (qrLoginHelper.login(content)) {
-                textRes = "登录成功，开始愉快的探索即可航路吧！";
+                textRes = "登录成功，开始愉快的探索极客航路吧！";
             } else {
                 textRes = "验证码过期了，刷新登录页面重试一下吧";
             }

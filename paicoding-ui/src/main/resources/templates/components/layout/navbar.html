@@ -106,7 +106,6 @@
             </a>
           </li>
 
-
           <!-- 头像框 -->
           <div class="nav-right-user">
             <div class="nav-user-avatar">
@@ -120,10 +119,8 @@
               />
               <div class="nav-user-arrow"></div>
               <div class="nav-user-dropdown">
-                <div class="nav-user-dropdown-inner nav-user-dropdown::before">
+                <div class="nav-user-dropdown-inner">
                   <!-- 下落框内容 -->
-                  <!--  调整为所有用户都可以直接看到管理后台  th:if="${#strings.equalsIgnoreCase(global.user.role, 'admin')}"-->
-                  <!-- 本地环境的时候不显示，本地环境的时候通过后端直接启动管理后台 -->
                   <a
                           th:if="${#strings.equals(global.env, 'prod')}"
                           href="/admin/#/statistics/index"
@@ -179,29 +176,63 @@
         <div class="modal-body">
           <div class="auth-body">
             <div class="login-main">
-              <!-- 分为上下两部分，下面是其他登录比如说 GitHub、验证码 -->
-              <div class="panel">
-                <h1 class="title">用户名密码登录</h1>
-                <!-- 登录表单、用户名和密码 -->
-                <form id="login-form">
-                  <div class="form-group">
-                    <input type="text" required autocomplete="off" class="form-control form-control-sm" id="username" placeholder="输入用户名">
+              <div class="tab-container">
+                <div class="tab-buttons">
+                  <button class="tab-button active" data-tab="login">登录</button>
+                  <button class="tab-button" data-tab="register">注册</button>
+                </div>
+                <div class="tab-content">
+                  <div class="tab-pane active" id="login-tab">
+                    <div class="panel">
+                      <h1 class="title">用户名密码登录</h1>
+                      <form id="login-form">
+                        <div class="form-group">
+                          <input type="text" required autocomplete="off" class="form-control form-control-sm" id="username" placeholder="输入用户名">
+                        </div>
+                        <div class="form-group">
+                          <input type="password" required class="form-control form-control-sm" id="password" placeholder="输入密码">
+                        </div>
+                        <div class="form-group">
+                          <input type="text" required class="form-control form-control-sm" id="captcha" placeholder="输入验证码">
+                          <img id="captchaImg" src="/captcha" alt="验证码" onclick="refreshCaptcha()">
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block btn-sm">登录</button>
+                      </form>
+                    </div>
                   </div>
-                  <div class="form-group">
-                    <input type="password" required class="form-control form-control-sm" id="password" placeholder="输入密码">
+                  <div class="tab-pane" id="register-tab">
+                    <div class="panel">
+                      <h1 class="title">用户注册</h1>
+                      <form id="register-form">
+                        <div class="form-group">
+                          <input type="text" required autocomplete="off" class="form-control form-control-sm" id="registerUsername" placeholder="输入用户名">
+                        </div>
+                        <div class="form-group">
+                          <input type="password" required class="form-control form-control-sm" id="registerPassword" placeholder="输入密码">
+                        </div>
+                        <div class="form-group">
+                          <input type="password" required class="form-control form-control-sm" id="confirmPassword" placeholder="确认密码">
+                        </div>
+                        <div class="form-group">
+                          <input type="text" required class="form-control form-control-sm" id="registerCaptcha" placeholder="输入验证码">
+                          <img id="registerCaptchaImg" src="/captcha" alt="验证码" onclick="refreshRegisterCaptcha()">
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block btn-sm">注册</button>
+                      </form>
+                    </div>
                   </div>
-                  <button type="submit" class="btn btn-primary btn-block btn-sm">登录</button>
-                </form>
+                </div>
               </div>
               <div class="other-login-box">
                 <div class="oauth-box">
                   <span>其他登录：</span>
                   <div class="oauth">
                     <div class="oauth-bg">
-                      <!-- GitHub 的 log svg -->
-                      <svg data-v-52064cc0="" width="24px" height="24px" viewBox="0 0 46 46" version="1.1"
-                           xmlns="http://www.w3.org/2000/svg"
-                           class="github-icon"><title data-v-52064cc0="">icon_GitHub</title><desc data-v-52064cc0="">Created with sketchtool.</desc><defs data-v-52064cc0=""></defs><g data-v-52064cc0="" id="状态" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g data-v-52064cc0="" id="注册" transform="translate(-758.000000, -600.000000)"><g data-v-52064cc0="" id="Group-4" transform="translate(758.000000, 600.000000)"><rect data-v-52064cc0="" id="Rectangle-314" fill-opacity="0" fill="#D8D8D8" x="0" y="0" width="46" height="46"></rect><path data-v-52064cc0="" d="M5,23.4307576 C5,31.1317497 10.1024923,37.6642712 17.179508,39.9691117 C18.0705582,40.1296159 18.3952722,39.5913918 18.3952722,39.1291397 C18.3952722,38.7161088 18.3799658,37.61933 18.3712193,36.1651618 C13.4174176,37.2180695 12.3722103,33.8282205 12.3722103,33.8282205 C11.5620653,31.8144276 10.3944069,31.2783436 10.3944069,31.2783436 C8.77739677,30.1976152 10.5168579,30.2190158 10.5168579,30.2190158 C12.3044248,30.342069 13.2446741,32.0155929 13.2446741,32.0155929 C14.8332581,34.6788928 17.413477,33.9095426 18.4280715,33.4633409 C18.5898819,32.3376714 19.0501667,31.5693912 19.5585573,31.1338898 C15.6040438,30.6941082 11.4461741,29.198209 11.4461741,22.5190936 C11.4461741,20.6165837 12.1404279,19.0596928 13.2796601,17.8420009 C13.0959835,17.4011493 12.4848215,15.6281127 13.4545902,13.2291098 C13.4545902,13.2291098 14.9491492,12.7604375 18.3515396,15.0160567 C19.7717533,14.6287065 21.2958318,14.4361015 22.8100705,14.4286113 C24.3232158,14.4361015 25.846201,14.6287065 27.2686013,15.0160567 C30.6688051,12.7604375 32.1611774,13.2291098 32.1611774,13.2291098 C33.1331328,15.6281127 32.5219708,17.4011493 32.3393875,17.8420009 C33.4808064,19.0596928 34.1695936,20.6165837 34.1695936,22.5190936 C34.1695936,29.2153294 30.005164,30.6887581 26.0386241,31.1199794 C26.6771189,31.6582035 27.246735,32.7218115 27.246735,34.3482542 C27.246735,36.6777053 27.2248688,38.5577447 27.2248688,39.1291397 C27.2248688,39.5956719 27.5463028,40.1381761 28.4493795,39.9680417 C35.5209286,37.657851 40.6190476,31.1296097 40.6190476,23.4307576 C40.6190476,13.8037149 32.6444218,6 22.8078838,6 C12.9746258,6 5,13.8037149 5,23.4307576 Z" id="Fill-3" fill="#161614"></path></g></g></g></svg>
+                      <a href="/oauth/github" class="github-login">
+                        <svg data-v-52064cc0="" width="24px" height="24px" viewBox="0 0 46 46" version="1.1"
+                             xmlns="http://www.w3.org/2000/svg"
+                             class="github-icon"><title data-v-52064cc0="">icon_GitHub</title><desc data-v-52064cc0="">Created with sketchtool.</desc><defs data-v-52064cc0=""></defs><g data-v-52064cc0="" id="状态" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g data-v-52064cc0="" id="注册" transform="translate(-758.000000, -600.000000)"><g data-v-52064cc0="" id="Group-4" transform="translate(758.000000, 600.000000)"><rect data-v-52064cc0="" id="Rectangle-314" fill-opacity="0" fill="#D8D8D8" x="0" y="0" width="46" height="46"></rect><path data-v-52064cc0="" d="M5,23.4307576 C5,31.1317497 10.1024923,37.6642712 17.179508,39.9691117 C18.0705582,40.1296159 18.3952722,39.5913918 18.3952722,39.1291397 C18.3952722,38.7161088 18.3799658,37.61933 18.3712193,36.1651618 C13.4174176,37.2180695 12.3722103,33.8282205 12.3722103,33.8282205 C11.5620653,31.8144276 10.3944069,31.2783436 10.3944069,31.2783436 C8.77739677,30.1976152 10.5168579,30.2190158 10.5168579,30.2190158 C12.3044248,30.342069 13.2446741,32.0155929 13.2446741,32.0155929 C14.8332581,34.6788928 17.413477,33.9095426 18.4280715,33.4633409 C18.5898819,32.3376714 19.0501667,31.5693912 19.5585573,31.1338898 C15.6040438,30.6941082 11.4461741,29.198209 11.4461741,22.5190936 C11.4461741,20.6165837 12.1404279,19.0596928 13.2796601,17.8420009 C13.0959835,17.4011493 12.4848215,15.6281127 13.4545902,13.2291098 C13.4545902,13.2291098 14.9491492,12.7604375 18.3515396,15.0160567 C19.7717533,14.6287065 21.2958318,14.4361015 22.8100705,14.4286113 C24.3232158,14.4361015 25.846201,14.6287065 27.2686013,15.0160567 C30.6688051,12.7604375 32.1611774,13.2291098 32.1611774,13.2291098 C33.1331328,15.6281127 32.5219708,17.4011493 32.3393875,17.8420009 C33.4808064,19.0596928 34.1695936,20.6165837 34.1695936,22.5190936 C34.1695936,29.2153294 30.005164,30.6887581 26.0386241,31.1199794 C26.6771189,31.6582035 27.246735,32.7218115 27.246735,34.3482542 C27.246735,36.6777053 27.2248688,38.5577447 27.2248688,39.1291397 C27.2248688,39.5956719 27.5463028,40.1381761 28.4493795,39.9680417 C35.5209286,37.657851 40.6190476,31.1296097 40.6190476,23.4307576 C40.6190476,13.8037149 32.6444218,6 22.8078838,6 C12.9746258,6 5,13.8037149 5,23.4307576 Z" id="Fill-3" fill="#161614"></path></g></g></g></svg>
+                      </a>
                     </div>
                   </div>
                 </div>
@@ -237,7 +268,6 @@
             </div>
           </div>
           <div class="mock-login" th:if="${!#strings.equals(global.env, 'prod')}">
-            <!-- 非生产环境，使用模拟登陆  -->
             <button
                     id="mockLogin2"
                     type="button"
@@ -256,73 +286,6 @@
               一键登录
             </button>
           </div>
-
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 绑定星球用户 -->
-  <div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h6 class="modal-title">绑定二哥编程星球，畅享 VIP 尊享服务！</h6>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <div class="auth-body">
-            <div class="register-main">
-              <!-- 分为上下两部分，下面是其他登录比如说 GitHub、验证码 -->
-              <div class="panel">
-                <h1 class="title">
-                  <a target="_blank"
-                     class="underline"
-                     href="https://paicoding.com/article/detail/358">戳我了解如何获取星球编号，新窗口打开</a>
-                </h1>
-                <form id="register-form">
-                  <div class="form-group">
-                    <input type="text"
-                           placeholder="星球编号，戳上面的链接有详细教程"
-                           class="form-control form-control-sm"
-                           required
-                           id="starNumber"
-                           autocomplete="off">
-                  </div>
-                  <div class="form-group">
-                    <input type="text"
-                           placeholder="用户名密码登录时用"
-                           class="form-control form-control-sm"
-                           id="registerUser" required>
-                  </div>
-                  <div class="form-group">
-                    <input type="password" placeholder="密码，你自己能记得住的" class="form-control form-control-sm" id="registerPassword" required>
-                  </div>
-                  <div class="form-group">
-                    <input type="text" placeholder="微信搜沉默王二回复邀请码获取，也可不填" class="form-control form-control-sm" id="invitationCode" autocomplete="off">
-                  </div>
-                  <!-- 绑定过会直接登录 -->
-                  <button type="submit"
-                          class="btn btn-primary btn-block btn-sm"
-                          th:text="${global.isLogin} ? '绑定' : '绑定后登录'">绑定/绑定后登录</button>
-                </form>
-              </div>
-            </div>
-            <div class="tabpane-container">
-              <h2 class="title">添加二哥微信 itwanger 审核更快</h2>
-              <div class="first">
-                <img class="signin-qrcode" th:src="${global.siteInfo.contactMeStarQrCode}"/>
-              </div>
-
-              <div class="explain">
-                <bold>记得备注</bold>
-                <code>星球编号</code>
-                <div>我会根据星球编号进行审核</div>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </div>
@@ -338,7 +301,15 @@
     // 是否自动刷新验证码
     let autoRefresh;
     const stateTag = $('#state'), codeTag = $('#code');
-
+    // 切换标签页
+    $('.tab-button').click(function() {
+      $('.tab-button').removeClass('active');
+      $(this).addClass('active');
+      
+      const tabId = $(this).data('tab');
+      $('.tab-pane').removeClass('active');
+      $(`#${tabId}-tab`).addClass('active');
+    });
     // 登录
     $("#login-form").on("submit", function(event) {
       event.preventDefault();
@@ -346,6 +317,7 @@
       // 获取用户名和密码，没有定义 ID
       const username = $("#username").val();
       const password = $("#password").val();
+      const captcha = $("#captcha").val(); 
 
       $.ajax({
         url: "/login/username",
@@ -362,6 +334,7 @@
           } else {
             // 登录失败
             toastr.error(response.status.msg);
+            refreshCaptcha();
           }
         },
         error: function(error) {
@@ -371,62 +344,65 @@
       });
     });
 
-    // 绑定星球
+    // 注册
     $("#register-form").on("submit", function(event) {
       event.preventDefault();
 
-      // 获取用户名和密码，没有定义 ID
-      const registerUser = $('#registerUser').val();
-      const starNumber = $("#starNumber").val() | '00000';
+      const username = $("#registerUsername").val();
       const password = $("#registerPassword").val();
-      const invitationCode = $("#invitationCode").val();
+      const confirmPassword = $("#confirmPassword").val();
+      const captcha = $("#registerCaptcha").val();
+
+      if (password !== confirmPassword) {
+        toastr.error('两次输入的密码不一致');
+        return;
+      }
 
       $.ajax({
-        url: "/login/register",
+        url: "/register",
         type: "POST",
         data: {
-          username: registerUser,
-          starNumber: starNumber.toString().padStart(5, '0'), // "00001",
+          username: username,
           password: password,
-          invitationCode: invitationCode
+          captcha: captcha
         },
         success: function(response) {
           console.log(response);
           if(response.status.code === 0) {
-            // 登录成功
-            refreshPage();
+            // 注册成功
+            toastr.success('注册成功,请登录');
+            $('.tab-button[data-tab="login"]').click();
           } else {
-            // 登录失败
+            // 注册失败
             toastr.error(response.status.msg);
+            refreshRegisterCaptcha();
           }
         },
         error: function(error) {
           console.error(error);
-          // 出现错误时如何处理
+          toastr.error('注册失败,请稍后重试');
+          refreshRegisterCaptcha();
         }
       });
     });
 
+    function refreshCaptcha() {
+      document.getElementById('captchaImg').src = '/captcha?t=' + new Date().getTime();
+    }
+
+    function refreshRegisterCaptcha() {
+      document.getElementById('registerCaptchaImg').src = '/captcha?t=' + new Date().getTime();
+    }
 
     $(".nav-article").click(() => {
-      if ([[${global.isLogin}]]) {
+      const isLogin = /*[[${global.isLogin}]]*/ false;
+      if (isLogin) {
         // 新页面打开文章编辑
         // 移除本地缓存
         localStorage.removeItem('articleTitle');
-        window.open("/article/edit")
+        window.open("/article/edit");
       }
-    })
-
-    // 定义一个刷新页面的方法
-    function refreshPage() {
-      if (window.location.pathname === "/login") {
-        // 登录成功，跳转首页
-        window.location.href = "/";
-      } else {
-        // 刷新当前页面
-        window.location.reload();
-      }
-    }
+    });
 
     /**
      * 记录长连接
@@ -490,7 +466,7 @@
           } catch (e) {}
         }
 
-        if ([[${!#strings.equals(global.env, 'prod')}]]) {
+        if (/*[[${!#strings.equals(global.env, 'prod')}]]*/ false) {
           $("#mockLogin").attr('data-verify-code', newCode);
           $("#mockLogin2").attr('data-verify-code', newCode);
         }
@@ -601,7 +577,7 @@
     let userWsClient = null;
     let userWsAckTime = 0;
     function autoBuildNotifyWsConnect() {
-      const logined = [[${global.isLogin}]]
+      const logined = /*[[${global.isLogin}]]*/ false;
       if (!logined) {
         // 未登录
         return;
@@ -651,10 +627,12 @@
         userWsClient.send(`/app/msg/health`, {}, "ping");
       }
     }
-    if ([[${global.isLogin}]]) {
+    
+    const isLogin = /*[[${global.isLogin}]]*/ false;
+    if (isLogin) {
       // 30s一次的ping/pong，用于长连接的保活
       notifyWsCheck();
-      setInterval(notifyWsCheck, 30_000)
+      setInterval(notifyWsCheck, 30000);
     }
 
   </script>

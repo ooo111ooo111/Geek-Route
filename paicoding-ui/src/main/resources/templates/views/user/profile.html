@@ -1,0 +1,21 @@
+<!-- 在用户信息部分添加 -->
+<div class="user-info-section">
+    <div class="user-info-item">
+        <span class="info-label">GitHub账号：</span>
+        <span class="info-value" th:if="${user.githubId != null}">
+            <a th:href="'https://github.com/' + ${user.username}" target="_blank">
+                <i class="fa fa-github"></i> ${user.username}
+            </a>
+            <form th:action="@{/user/unbind/github}" method="post" style="display: inline;">
+                <button type="submit" class="btn btn-danger btn-sm">解绑</button>
+            </form>
+        </span>
+        <span class="info-value" th:unless="${user.githubId != null}">
+            <a href="/oauth/github" class="btn btn-primary btn-sm">绑定GitHub账号</a>
+        </span>
+    </div>
+</div>
+
+<!-- 添加错误提示 -->
+<div class="alert alert-danger" th:if="${error}" th:text="${error}"></div>
+<div class="alert alert-success" th:if="${success}" th:text="${success}"></div> 

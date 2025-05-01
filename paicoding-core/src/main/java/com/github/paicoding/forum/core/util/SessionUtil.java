@@ -3,9 +3,12 @@ package com.github.paicoding.forum.core.util;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.util.CollectionUtils;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Arrays;
 import java.util.List;
 
@@ -26,7 +29,6 @@ public class SessionUtil {
         cookie.setMaxAge(maxAge);
         return cookie;
     }
-
 
     public static Cookie delCookie(String key) {
         return delCookie(key, "/");
@@ -52,10 +54,11 @@ public class SessionUtil {
             return null;
         }
 
-        return Arrays.stream(cookies).filter(cookie -> StringUtils.equalsAnyIgnoreCase(cookie.getName(), name))
-                .findFirst().orElse(null);
+        return Arrays.stream(cookies)
+                .filter(cookie -> StringUtils.equalsAnyIgnoreCase(cookie.getName(), name))
+                .findFirst()
+                .orElse(null);
     }
-
 
     public static String findCookieByName(ServerHttpRequest request, String name) {
         List<String> list = request.getHeaders().get("cookie");
@@ -73,5 +76,10 @@ public class SessionUtil {
             }
         }
         return null;
+    }
+
+    public static HttpSession getSession() {
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        return attributes.getRequest().getSession();
     }
 }

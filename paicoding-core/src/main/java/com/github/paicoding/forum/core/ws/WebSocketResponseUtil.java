@@ -16,7 +16,7 @@ public class WebSocketResponseUtil {
     private static volatile SimpMessagingTemplate simpMessagingTemplate;
 
     /**
-     * 初始化
+     * 初始化   创建单例对象(懒汉式)
      */
     private static void initSimpMessageTemplate() {
         if (simpMessagingTemplate == null) {
@@ -54,7 +54,8 @@ public class WebSocketResponseUtil {
     /**
      * 封装websocket的消息处理，主要是设置上下文，全链路traceId
      *
-     * @param accessor 请求
+     * @param accessor 请求，用来访问 WebSocket 消息头和会话属性
+     *                 ReqInfoContext代表用户上下文，用来获取用户信息
      * @param func     执行体
      */
     public static void execute(SimpMessageHeaderAccessor accessor, Runnable func) {

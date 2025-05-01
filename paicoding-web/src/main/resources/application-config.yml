@@ -14,7 +14,7 @@ view:
     contactMeStarQrCode:
     pageSize: 20
     cdnImgStyle:
-    websiteRecord: 备案被小人偷袭了
+    websiteRecord: 冀ICP备2025112972号
     wxLoginUrl:
     host: http://127.0.0.1:${server.port}
     welcomeInfo: 欢迎来到极客航路，戳<a href="/article/detail/15">极客航路全方位视角解读</a>了解我们

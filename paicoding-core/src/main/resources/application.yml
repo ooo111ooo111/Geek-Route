@@ -1,0 +1,5 @@
+github:
+  oauth:
+    client-id: your-client-id
+    client-secret: your-client-secret
+    redirect-uri: http://localhost:8080/oauth/github/callback 

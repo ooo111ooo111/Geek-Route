@@ -442,9 +442,27 @@ public class RedisClient {
     }
 
     /**
+     *
+     * @param s
+     * @param token
+     * @param tokenExpire
+     */
+
+    public void set(String s, String token, long tokenExpire) {
+        RedisClient.setStrWithExpire(s, token, tokenExpire);
+        RedisClient.expire(s, tokenExpire);
+        RedisClient.setStr(s, token);
+    }
+
+    public String get(String s) {
+        return RedisClient.getStr(s);
+    }
+
+    /**
      * redis 管道执行的封装链路
      */
     public static class PipelineAction {
+        //run存放需要执行的方法
         private List<Runnable> run = new ArrayList<>();
 
         private RedisConnection connection;

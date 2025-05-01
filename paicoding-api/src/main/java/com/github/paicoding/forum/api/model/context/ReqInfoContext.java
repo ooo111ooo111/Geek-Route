@@ -14,6 +14,7 @@ import java.security.Principal;
  * @date 2022/7/6
  */
 public class ReqInfoContext {
+    // 线程安全的上下文  transmittableThreadLocal可以用于异步的线程交互   可以于线程池配合使用
     private static TransmittableThreadLocal<ReqInfo> contexts = new TransmittableThreadLocal<>();
 
     public static void addReqInfo(ReqInfo reqInfo) {

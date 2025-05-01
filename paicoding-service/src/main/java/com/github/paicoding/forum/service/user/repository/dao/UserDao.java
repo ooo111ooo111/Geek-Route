@@ -122,4 +122,58 @@ public class UserDao extends ServiceImpl<UserInfoMapper, UserInfoDO> {
     public void updateUser(UserDO userDO) {
         userMapper.updateById(userDO);
     }
+
+    /**
+     * 根据GitHub ID查找用户
+     */
+    public UserDO getByGithubId(String githubId) {
+        LambdaQueryWrapper<UserDO> query = Wrappers.lambdaQuery();
+        query.eq(UserDO::getThirdAccountId, githubId)
+                .eq(UserDO::getDeleted, YesOrNoEnum.NO.getCode())
+                .last("limit 1");
+        return userMapper.selectOne(query);
+    }
+
+    /**
+     * 获取所有关联了GitHub的用户
+     */
+    public List<UserDO> gteGithubUsers() {
+        LambdaQueryWrapper<UserDO> query = Wrappers.lambdaQuery();
+        query.isNotNull(UserDO::getThirdAccountId)
+                .eq(UserDO::getDeleted, YesOrNoEnum.NO.getCode());
+        return userMapper.selectList(query);
+    }
+
+    /**
+     * 根据用户名查找用户
+     */
+    public UserDO getByUsername(String username) {
+        LambdaQueryWrapper<UserDO> query = Wrappers.lambdaQuery();
+        query.eq(UserDO::getUserName, username)
+                .eq(UserDO::getDeleted, YesOrNoEnum.NO.getCode())
+                .last("limit 1");
+        return userMapper.selectOne(query);
+    }
+
+    /**
+     * 保存用户信息
+     */
+    public void save(UserDO user) {
+        if (user.getId() == null) {
+            userMapper.insert(user);
+        } else {
+            userMapper.updateById(user);
+        }
+    }
+
+    /**
+     * 更新用户信息
+     */
+    public void update(UserDO user) {
+        userMapper.updateById(user);
+    }
+
+    public UserDO getUserById(Long id) {
+        return userMapper.selectById(id);
+    }
 }

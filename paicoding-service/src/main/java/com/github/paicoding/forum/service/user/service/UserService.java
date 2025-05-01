@@ -6,6 +6,7 @@ import com.github.paicoding.forum.api.model.vo.user.dto.BaseUserInfoDTO;
 import com.github.paicoding.forum.api.model.vo.user.dto.SimpleUserInfoDTO;
 import com.github.paicoding.forum.api.model.vo.user.dto.UserStatisticInfoDTO;
 import com.github.paicoding.forum.service.user.repository.entity.UserDO;
+import javax.servlet.http.HttpSession;
 
 import java.util.Collection;
 import java.util.List;
@@ -112,4 +113,14 @@ public interface UserService {
      * @return
      */
     BaseUserInfoDTO queryUserByLoginName(String uname);
+
+    UserDO getUserById(Long id);
+    
+    UserDO getUserByUsername(String username);
+    
+    UserDO getUserByGithubId(String githubId);
+    
+    void updateUser(UserDO user);
+    
+    void updateUserSession(HttpSession session, UserDO user);
 }

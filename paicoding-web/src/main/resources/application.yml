@@ -63,6 +63,11 @@ mybatis-plus:
     #开启下划线转驼峰
     map-underscore-to-camel-case: true
 
+github:
+  oauth:
+    client-id:
+    client-secret:
+    redirect-uri: http://127.0.0.1:8080/oauth/github/callback
 
 # knife4j
 knife4j:
@@ -76,7 +81,6 @@ knife4j:
     concat:
       - 程序员曼布
       - https://www.geek-route.asia/
-      - https://github.com/itwanger/paicoding
     license: Apache License 2.0
     license-url: https://github.com/itwanger/paicoding/blob/main/License
     email: bangzewu@126.com

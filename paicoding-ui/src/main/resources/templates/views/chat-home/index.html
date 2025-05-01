@@ -44,29 +44,28 @@
                     <select class="styled-dropdown" id="chat-type">
                         <option value="DEEP_SEEK">DeepSeek</option>
                         <option value="CHAT_GPT_3_5">OpenAI</option>
-                        <option value="ALI_AI">通义千问</option>
                         <option value="XUN_FEI_AI">讯飞星火</option>
-                        <option value="ZHI_PU_AI">智谱</option>
-                        <option value="DOU_BAO_AI">豆包</option>
                     </select>
                 </div>
         </div>
         <div class="message-content" id="chat-content">
         </div>
 
-        <div class="chat-input">
-            <textarea id="input-field" class="form-control" rows="3" placeholder="大笨蛋，快登录和我对线吧" disabled></textarea>
-            <button id="send-btn" disabled>
-                <div class="button_icon-button-icon__qlUH3 no-dark">
-                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16" fill="none"><defs><path id="send-white_svg__a" d="M0 0h16v16H0z"></path></defs><g><mask id="send-white_svg__b" fill="#fff"><use xlink:href="#send-white_svg__a"></use></mask><g mask="url(#send-white_svg__b)"><path transform="translate(1.333 2)" d="M0 4.71 6.67 6l1.67 6.67L12.67 0 0 4.71Z" style="stroke: rgb(255, 255, 255); stroke-width: 1.33333; stroke-opacity: 1; stroke-dasharray: 0, 0;"></path><path transform="translate(8.003 6.117)" d="M0 1.89 1.89 0" style="stroke: rgb(255, 255, 255); stroke-width: 1.33333; stroke-opacity: 1; stroke-dasharray: 0, 0;"></path></g></g></svg>
-                </div>
-                <div class="button_icon-button-text__k3vob">等待登录</div>
-            </button>
+            <div class="chat-input">
+                <textarea id="input-field" class="form-control" rows="3"
+                          th:placeholder="${!global.isLogin ? '请先登录后使用AI助手' : '请输入您的问题'}"
+                          th:disabled="${!global.isLogin}"></textarea>
+                <button id="send-btn" th:disabled="${!global.isLogin}">
+                    <div class="button_icon-button-icon__qlUH3 no-dark">
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16" fill="none"><defs><path id="send-white_svg__a" d="M0 0h16v16H0z"></path></defs><g><mask id="send-white_svg__b" fill="#fff"><use xlink:href="#send-white_svg__a"></use></mask><g mask="url(#send-white_svg__b)"><path transform="translate(1.333 2)" d="M0 4.71 6.67 6l1.67 6.67L12.67 0 0 4.71Z" style="stroke: rgb(255, 255, 255); stroke-width: 1.33333; stroke-opacity: 1; stroke-dasharray: 0, 0;"></path><path transform="translate(8.003 6.117)" d="M0 1.89 1.89 0" style="stroke: rgb(255, 255, 255); stroke-width: 1.33333; stroke-opacity: 1; stroke-dasharray: 0, 0;"></path></g></g></svg>
+                    </div>
+                    <div class="button_icon-button-text__k3vob" th:text="${!global.isLogin ? '请登录' : '发送'}"></div>
+                </button>
+            </div>
         </div>
     </div>
-</div>
-<!-- 底部信息 -->
-<div th:replace="components/layout/footer :: footer"></div>
+    <!-- 底部信息 -->
+    <div th:replace="components/layout/footer :: footer"></div>
 </div>
 </body>
 
@@ -82,24 +81,57 @@
     let wsConnected = false;
 
     // 从 global.user.photo 中取出用户头像 thymeleaf 传入的值
-    const isLogin = [[${global.isLogin}]], user = [[${global.user}]];
-
+    userLoggedIn = /*[[${global.isLogin}]]*/ false;
+    const user = /*[[${global.user}]]*/ null;
 
     // 页面加载完成后，执行 initWs
     $(function () {
-        if (isLogin) {
+        // 只在页面加载完成时发送一次PV统计
+        if (userLoggedIn) {
+            // 使用fetch发送PV统计请求
+            fetch('/api/statistics/pv', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    type: 'PAGE_VIEW',
+                    path: window.location.pathname
+                })
+            });
+        }
+        
+        if (userLoggedIn) {
             initWs();
+            chatTitle.text(user.userName);
+            inputField.removeAttr("disabled");
+            inputField.attr("placeholder", "请输入您的问题");
+            sendBtnText.text("发送");
+            sendBtn.removeAttr("disabled");
         } else {
             console.log("请先登录");
         }
     });
+    // 监听登录模态框关闭事件
+    $('#loginModal').on('hidden.bs.modal', function () {
+        if (userLoggedIn) {
+            // 登录成功后重新初始化
+            initWs();
+            chatTitle.text(user.userName);
+            inputField.removeAttr("disabled");
+            inputField.attr("placeholder", "请输入您的问题");
+            sendBtnText.text("发送");
+            sendBtn.removeAttr("disabled");
+        }
+    });
+
 
     // 建立会话, 首先判断一下用户是否已经登录
     const session = getCookie("f-session");
 
     $('#chat-type').change(function(e) {
         // 更新了选中的下拉框时，重新建立连接
-        if (isLogin) {
+        if (userLoggedIn) {
             chatContent.html('');
             disconnect();
             initWs();
@@ -371,76 +403,63 @@
     }
 
     function doSend() {
-        let qa = inputField.val();
-        // const prompt = promptField.val() | "";
+        if (!stompClient || !wsConnected) {
+            toastr.warning('连接已断开，请刷新页面重试');
+            return;
+        }
+
+        let qa = inputField.val().trim();
+        if (!qa) {
+            toastr.warning('请输入问题内容');
+            return;
+        }
+
         if (qa.length > 512) {
             toastr.info("提问长度请不要超过512字符哦~");
             return;
         }
-        // 表示将消息转发到那个目标，类似与http请求中的path路径
-        // qa = prompt == "" ? qa : prompt + "prompt-" + qa;
-        if (lastChatId == null) {
-            // 创建新的会话
-            lastChatId = newChat();
-        }
-        stompClient.send("/app/chat/" + session + "/" + lastChatId, {'s-uid': session}, qa);
-        // 清空 textarea
-        inputField.val("");
 
-        addClientMsg(qa.replace(/\n/g, "<br/>"), true);
-
-        // 将 button 设为禁用，防止用户连续点击
-        sendBtn.attr("disabled", true);
-    }
-
-
-    sendBtn.click(function () {
-        if (stompClient == null) {
-            initWs();
-        } else {
-            // 如果消息内容为空的时候重新聚焦到输入框
-            if (inputField.val() === "") {
-                inputField.focus();
-            } else {
-                // 发送消息
-                doSend();
-            }
-        }
-    });
-
-    promptField.keydown(function (e) {
-        if (isLogin && e.key === 'Enter') {
-            // 输入提示词并回车的场景
-            let prompt = document.getElementById("promptField").value;
-            prompt = prompt.trim();
-            if (!prompt) {
-                // 空的提示词，不做任何处理
-                return;
-            }
-
-            let qa = 'prompt-' + prompt;
-            if (qa.length > 512) {
-                toastr.info("提问长度请不要超过512字符哦~");
-                return;
-            }
+        try {
             if (lastChatId == null) {
                 // 创建新的会话
                 lastChatId = newChat();
-                toastr.info("对话已创建，请重新确认提示词吧~");
-            } else {
-                stompClient.send("/app/chat/" + session + "/" + lastChatId, {'s-uid': session}, qa);
-                // 清空 textarea
-                inputField.val("");
-
-                addClientMsg(prompt.replace(/\n/g, "<br/>"), true);
-
-                // 将 button 设为禁用，防止用户连续点击
-                sendBtn.attr("disabled", true);
-
-                // 清空输入内容
-                promptField.val("");
             }
+
+            // 发送消息
+            stompClient.send("/app/chat/" + session + "/" + lastChatId, {'s-uid': session}, qa);
+            
+            // 清空输入框
+            inputField.val("");
+            // 添加用户消息到聊天界面
+            addClientMsg(qa.replace(/\n/g, "<br/>"), true);
+            // 禁用发送按钮，防止重复发送
+            sendBtn.attr("disabled", true);
+        } catch (error) {
+            console.error('发送消息失败:', error);
+            toastr.error('发送消息失败，请重试');
+            sendBtn.removeAttr("disabled");
         }
+    }
+
+    sendBtn.click(function () {
+        if (!userLoggedIn) {
+            toastr.warning('请先登录');
+            return;
+        }
+
+        if (!stompClient || !wsConnected) {
+            initWs();
+            return;
+        }
+
+        // 如果消息内容为空的时候重新聚焦到输入框
+        if (inputField.val().trim() === "") {
+            inputField.focus();
+            return;
+        }
+
+        // 发送消息
+        doSend();
     });
 
     inputField.keydown(function (e) {

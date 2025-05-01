@@ -11,6 +11,8 @@ import com.github.paicoding.forum.api.model.vo.user.dto.SimpleUserInfoDTO;
 import com.github.paicoding.forum.api.model.vo.user.dto.UserStatisticInfoDTO;
 import com.github.paicoding.forum.core.util.IpUtil;
 import com.github.paicoding.forum.service.article.repository.dao.ArticleDao;
+import com.github.paicoding.forum.service.session.SessionService;
+import com.github.paicoding.forum.service.session.model.UserSessionDTO;
 import com.github.paicoding.forum.service.statistics.service.CountService;
 import com.github.paicoding.forum.service.user.converter.UserConverter;
 import com.github.paicoding.forum.service.user.repository.dao.UserAiDao;
@@ -21,6 +23,7 @@ import com.github.paicoding.forum.service.user.repository.entity.UserAiDO;
 import com.github.paicoding.forum.service.user.repository.entity.UserDO;
 import com.github.paicoding.forum.service.user.repository.entity.UserInfoDO;
 import com.github.paicoding.forum.service.user.repository.entity.UserRelationDO;
+import com.github.paicoding.forum.service.user.repository.mapper.UserMapper;
 import com.github.paicoding.forum.service.user.service.UserAiService;
 import com.github.paicoding.forum.service.user.service.UserService;
 import com.github.paicoding.forum.service.user.service.help.UserPwdEncoder;
@@ -32,6 +35,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -70,6 +74,12 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserAiService userAiService;
+    
+    @Autowired
+    private UserMapper userMapper;
+
+    @Autowired
+    private SessionService sessionService;
 
     @Override
     public UserDO getWxUser(String wxuuid) {
@@ -245,5 +255,30 @@ public class UserServiceImpl implements UserService {
         }
 
         return queryBasicUserInfo(user.getId());
+    }
+    @Override
+    public UserDO getUserById(Long id) {
+        return userMapper.selectById(id);
+    }
+
+    @Override
+    public UserDO getUserByUsername(String username) {
+        return userMapper.selectByUsername(username);
+    }
+
+    @Override
+    public UserDO getUserByGithubId(String githubId) {
+        return userMapper.selectByGithubId(githubId);
+    }
+
+    @Override
+    public void updateUser(UserDO user) {
+        userMapper.updateById(user);
+    }
+
+    @Override
+    public void updateUserSession(HttpSession session, UserDO user) {
+        UserSessionDTO dto = sessionService.convertToSessionDTO(user);
+        sessionService.setUser(session, dto);
     }
 }

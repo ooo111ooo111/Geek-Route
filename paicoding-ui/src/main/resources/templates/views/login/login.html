@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录 - 极客航路</title>
+    <link rel="stylesheet" href="/css/login.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-box">
+            <h2>登录/注册</h2>
+            <div class="tab-container">
+                <div class="tab-buttons">
+                    <button class="tab-button active" data-tab="login">登录</button>
+                    <button class="tab-button" data-tab="register">注册</button>
+                </div>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="login-tab">
+                        <form id="loginForm">
+                            <div class="form-group">
+                                <input type="text" id="username" name="username" placeholder="用户名" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="password" id="password" name="password" placeholder="密码" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" id="captcha" name="captcha" placeholder="验证码" required>
+                                <img id="captchaImg" src="/captcha" alt="验证码" onclick="refreshCaptcha()">
+                            </div>
+                            <div class="form-group">
+                                <button type="submit">登录</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="tab-pane" id="register-tab">
+                        <form id="registerForm">
+                            <div class="form-group">
+                                <input type="text" id="registerUsername" name="username" placeholder="用户名" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="password" id="registerPassword" name="password" placeholder="密码" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="password" id="confirmPassword" name="confirmPassword" placeholder="确认密码" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" id="registerCaptcha" name="captcha" placeholder="验证码" required>
+                                <img id="registerCaptchaImg" src="/captcha" alt="验证码" onclick="refreshRegisterCaptcha()">
+                            </div>
+                            <div class="form-group">
+                                <button type="submit">注册</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="other-login">
+                <h3>其他登录方式</h3>
+                <div class="qrcode-container">
+                    <img class="qrcode" th:src="${global.siteInfo.contactMeWxQrCode}" alt="微信扫码登录">
+                    <p>微信扫码登录</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/jquery.min.js"></script>
+    <script>
+        function refreshCaptcha() {
+            document.getElementById('captchaImg').src = '/captcha?t=' + new Date().getTime();
+        }
+
+        function refreshRegisterCaptcha() {
+            document.getElementById('registerCaptchaImg').src = '/captcha?t=' + new Date().getTime();
+        }
+
+        $(document).ready(function() {
+            // 切换标签页
+            $('.tab-button').click(function() {
+                $('.tab-button').removeClass('active');
+                $(this).addClass('active');
+                
+                const tabId = $(this).data('tab');
+                $('.tab-pane').removeClass('active');
+                $(`#${tabId}-tab`).addClass('active');
+            });
+
+            // 登录表单提交
+            $('#loginForm').submit(function(e) {
+                e.preventDefault();
+                $.ajax({
+                    url: '/login',
+                    type: 'POST',
+                    data: {
+                        username: $('#username').val(),
+                        password: $('#password').val(),
+                        captcha: $('#captcha').val()
+                    },
+                    success: function(response) {
+                        if (response.code === 0) {
+                            window.location.href = '/';
+                        } else {
+                            alert(response.msg);
+                            refreshCaptcha();
+                        }
+                    },
+                    error: function() {
+                        alert('登录失败,请稍后重试');
+                        refreshCaptcha();
+                    }
+                });
+            });
+
+            // 注册表单提交
+            $('#registerForm').submit(function(e) {
+                e.preventDefault();
+                const password = $('#registerPassword').val();
+                const confirmPassword = $('#confirmPassword').val();
+                
+                if (password !== confirmPassword) {
+                    alert('两次输入的密码不一致');
+                    return;
+                }
+
+                $.ajax({
+                    url: '/register',
+                    type: 'POST',
+                    data: {
+                        username: $('#registerUsername').val(),
+                        password: password,
+                        captcha: $('#registerCaptcha').val()
+                    },
+                    success: function(response) {
+                        if (response.code === 0) {
+                            alert('注册成功,请登录');
+                            $('.tab-button[data-tab="login"]').click();
+                        } else {
+                            alert(response.msg);
+                            refreshRegisterCaptcha();
+                        }
+                    },
+                    error: function() {
+                        alert('注册失败,请稍后重试');
+                        refreshRegisterCaptcha();
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html> 
