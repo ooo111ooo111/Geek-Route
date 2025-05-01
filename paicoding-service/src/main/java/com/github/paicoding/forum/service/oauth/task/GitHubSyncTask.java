@@ -1,6 +1,6 @@
 package com.github.paicoding.forum.service.oauth.task;
 
-import com.github.paicoding.forum.service.oauth.GitHubOAuthService;
+import com.github.paicoding.forum.service.oauth.service.GitHubOAuthService;
 import com.github.paicoding.forum.service.oauth.model.GitHubUserInfo;
 import com.github.paicoding.forum.service.oauth.service.GitHubTokenService;
 import com.github.paicoding.forum.service.oauth.service.OAuthUserService;

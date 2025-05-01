@@ -1,4 +1,4 @@
-package com.github.paicoding.forum.service.oauth;
+package com.github.paicoding.forum.service.oauth.service;
 
 import com.alibaba.fastjson.JSON;
 import com.github.paicoding.forum.core.config.GitHubOAuthConfig;
