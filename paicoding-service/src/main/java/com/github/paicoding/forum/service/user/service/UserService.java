@@ -114,13 +114,4 @@ public interface UserService {
      */
     BaseUserInfoDTO queryUserByLoginName(String uname);
 
-    UserDO getUserById(Long id);
-    
-    UserDO getUserByUsername(String username);
-    
-    UserDO getUserByGithubId(String githubId);
-    
-    void updateUser(UserDO user);
-    
-    void updateUserSession(HttpSession session, UserDO user);
 }

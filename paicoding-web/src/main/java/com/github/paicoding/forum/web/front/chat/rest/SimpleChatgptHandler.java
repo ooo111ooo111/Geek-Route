@@ -30,7 +30,7 @@ public class SimpleChatgptHandler extends TextWebSocketHandler {
         map.put("message", msg);
         map.put("type", type.toString());
         map.put("time", LocalDateTimeUtil.formatNormal(LocalDateTime.now()));
-
+        log.info("返回的内容是! {} = {}", ReqInfoContext.getReqInfo().getUserId(), map);
         ObjectMapper objectMapper = new ObjectMapper();
         String json = objectMapper.writeValueAsString(map);
 

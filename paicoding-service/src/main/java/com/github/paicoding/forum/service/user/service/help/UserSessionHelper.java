@@ -103,20 +103,5 @@ public class UserSessionHelper {
             return null;
         }
     }
-    @Autowired
-    private SessionService sessionService;
-
-    public Object getLoginUser(HttpSession session) {
-        return sessionService.getUser(session);
-    }
-
-    public void setLoginUser(HttpSession session, UserDO user) {
-        UserSessionDTO dto = sessionService.convertToSessionDTO(user);
-        sessionService.setUser(session, dto);
-    }
-
-    public void removeLoginUser(HttpSession session) {
-        sessionService.removeUser(session);
-    }
 
 }

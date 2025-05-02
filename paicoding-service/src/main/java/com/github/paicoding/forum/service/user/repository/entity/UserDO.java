@@ -48,17 +48,5 @@ public class UserDO extends BaseDO {
      */
     private Long id;
 
-    /**
-     * github id
-     */
-    private String githubId;
-    /**
-     * 邮箱
-     */
-    private String email;
-    /**
-     * 头像
-     */
-    private String avatar;
 
 }

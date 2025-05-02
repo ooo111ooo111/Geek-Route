@@ -110,7 +110,7 @@ logging:
 management:
   server:
     address: 127.0.0.1 # 设置为本地ip，防止远程访问该连接进行关闭服务
-    port: 8999
+    port: 8989
   endpoints:
     web:
       exposure:

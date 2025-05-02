@@ -30,17 +30,4 @@ public interface SessionService {
      */
     void removeUser(HttpSession session);
 
-    /**
-     * 将UserDO转换为UserSessionDTO
-     * @param user 用户数据对象
-     * @return 用户会话DTO
-     */
-    UserSessionDTO convertToSessionDTO(UserDO user);
-
-    /**
-     * 将UserSessionDTO转换为UserDO
-     * @param dto 用户会话DTO
-     * @return 用户数据对象
-     */
-    UserDO convertToUserDO(UserSessionDTO dto);
 } 

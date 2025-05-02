@@ -33,10 +33,4 @@ public interface UserMapper extends BaseMapper<UserDO> {
      */
     @Select("select id from user where id > #{offsetUserId} order by id asc limit #{size}")
     List<Long> getUserIdsOrderByIdAsc(@Param("offsetUserId") Long offsetUserId, @Param("size") Long size);
-
-    @Select("select * from user where username = #{username} limit 1")
-    UserDO selectByUsername(String username);
-
-    @Select("select * from user where github_id = #{githubId} limit 1")
-    UserDO selectByGithubId(String githubId);
 }

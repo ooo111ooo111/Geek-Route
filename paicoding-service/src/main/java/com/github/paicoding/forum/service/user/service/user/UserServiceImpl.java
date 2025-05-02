@@ -256,29 +256,4 @@ public class UserServiceImpl implements UserService {
 
         return queryBasicUserInfo(user.getId());
     }
-    @Override
-    public UserDO getUserById(Long id) {
-        return userMapper.selectById(id);
-    }
-
-    @Override
-    public UserDO getUserByUsername(String username) {
-        return userMapper.selectByUsername(username);
-    }
-
-    @Override
-    public UserDO getUserByGithubId(String githubId) {
-        return userMapper.selectByGithubId(githubId);
-    }
-
-    @Override
-    public void updateUser(UserDO user) {
-        userMapper.updateById(user);
-    }
-
-    @Override
-    public void updateUserSession(HttpSession session, UserDO user) {
-        UserSessionDTO dto = sessionService.convertToSessionDTO(user);
-        sessionService.setUser(session, dto);
-    }
 }

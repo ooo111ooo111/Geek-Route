@@ -100,7 +100,7 @@
                 })
             });
         }
-        
+
         if (userLoggedIn) {
             initWs();
             chatTitle.text(user.userName);
@@ -427,7 +427,7 @@
 
             // 发送消息
             stompClient.send("/app/chat/" + session + "/" + lastChatId, {'s-uid': session}, qa);
-            
+
             // 清空输入框
             inputField.val("");
             // 添加用户消息到聊天界面

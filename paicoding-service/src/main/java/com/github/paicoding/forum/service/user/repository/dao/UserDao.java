@@ -123,26 +123,9 @@ public class UserDao extends ServiceImpl<UserInfoMapper, UserInfoDO> {
         userMapper.updateById(userDO);
     }
 
-    /**
-     * 根据GitHub ID查找用户
-     */
-    public UserDO getByGithubId(String githubId) {
-        LambdaQueryWrapper<UserDO> query = Wrappers.lambdaQuery();
-        query.eq(UserDO::getThirdAccountId, githubId)
-                .eq(UserDO::getDeleted, YesOrNoEnum.NO.getCode())
-                .last("limit 1");
-        return userMapper.selectOne(query);
-    }
 
-    /**
-     * 获取所有关联了GitHub的用户
-     */
-    public List<UserDO> gteGithubUsers() {
-        LambdaQueryWrapper<UserDO> query = Wrappers.lambdaQuery();
-        query.isNotNull(UserDO::getThirdAccountId)
-                .eq(UserDO::getDeleted, YesOrNoEnum.NO.getCode());
-        return userMapper.selectList(query);
-    }
+
+
 
     /**
      * 根据用户名查找用户

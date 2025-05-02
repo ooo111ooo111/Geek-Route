@@ -28,37 +28,4 @@ public class SessionServiceImpl implements SessionService {
         session.removeAttribute(USER_SESSION_KEY);
     }
 
-    @Override
-    public UserSessionDTO convertToSessionDTO(UserDO user) {
-        if (user == null) {
-            return null;
-        }
-        UserSessionDTO dto = new UserSessionDTO();
-        dto.setId(user.getId());
-        dto.setUsername(user.getUserName());
-        dto.setEmail(user.getEmail());
-        dto.setAvatar(user.getAvatar());
-        dto.setGithubId(user.getGithubId());
-        return dto;
-    }
-
-    @Override
-    public UserDO convertToUserDO(UserSessionDTO dto) {
-        if (dto == null) {
-            return null;
-        }
-        UserDO user = new UserDO();
-        user.setId(dto.getId());
-        user.setUserName(dto.getUsername());
-        user.setEmail(dto.getEmail());
-        user.setAvatar(dto.getAvatar());
-        user.setGithubId(dto.getGithubId());
-        return user;
-    }
-
-    // 添加 RedisClient 的 Bean 定义
-    @Bean
-    public RedisClient redisClient() {
-        return new RedisClient();
-    }
 }
